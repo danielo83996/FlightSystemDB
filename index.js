@@ -17,10 +17,10 @@ app.use(express.json());
 //get all todo
 app.get('/Customer', async (req, res) => {
   try {
-    console.log('try to fetch');
+    console.log('try to fetch'); 
     const allCustomers = await customerRepository.getAllCustomers();
     console.log('get all todos ', allCustomers);
-    res.json(allCustomers);
+    res.json(allCustomers); 
   } catch (err) {
     console.log(err.message);
   }
@@ -57,7 +57,7 @@ app.get('*', function (req, res) {
 
 const dao = new AppDAO();
 const customerRepository = new Repository(dao);
-customerRepository.createTable();
+customerRepository.createCustomerTable();
 
 app.listen(3000, () => {
   console.log('server has started on port 3000');

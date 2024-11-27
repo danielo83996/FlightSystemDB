@@ -5,13 +5,15 @@ class Repository {
     this.dao = dao;
   }
 
-  createTable() {
-    const sql = queries.createTable;
+  createCustomerTable() {
+    const sql = queries.createCustomerTable;
     return this.dao.run(sql);
   }
 
-  insertCustomer(Lname, Fname, DOB, pnumber, gender, email) {
-    return this.dao.run(queries.insertCustomer, [Lname, Fname, DOB, pnumber, gender, email]);
+  insertCustomer(Lname, Fname, dob, pnumber, gender, email) {
+    console.log('Inserting customer with values:', { Lname, Fname, dob, pnumber, gender, email });
+
+    return this.dao.run(queries.insertCustomer, [Lname, Fname, dob, pnumber, gender, email]);
   } 
   getCustomerById(id) {
     return this.dao.run(queries.getCustomerById, [id]);

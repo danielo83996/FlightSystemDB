@@ -56,14 +56,35 @@ async function selectCustomer() {
 async function insertCustomer() {
     const inputBox = document.querySelector('#Fname'); // Match the corrected HTML id
     const Fname = inputBox.value.trim(); // Trim whitespace
+    const Lname = (document.querySelector('#Lname')).value.trim();
+    const DOB = (document.querySelector('#dob')).value.trim();
+    const pnumber = (document.querySelector('#pnumber')).value.trim();
+    const gender = (document.querySelector('#gender')).value.trim();
+    const email = (document.querySelector('#email')).value.trim();
+
+    
+    // Add 28 buttons dynamically
+    const buttonsDiv = document.getElementById('seat-container');
+    buttonsDiv.innerHTML = ''; // Clear previous buttons
+    for (let i = 1; i <= 28; i++) {
+        buttonsDiv.innerHTML += `<button class="seat-btn" id="seat-btn-${i}" type="button" onclick="buttonClicked(${i})">Seat ${i}</button>`;
+    }
+
+    // Clear form inputs after saving
+    document.getElementById('customer-form').reset();
+
+
     console.log(Fname);
-    if (!Fname) {
-      alert('First Name cannot be empty.');
+    if (!Fname||!DOB||!Lname||!pnumber||!gender||!email) {
+      alert('All fields cannot be empty.');
       return;
     }
+
+    
   
     try {
-      const body = { Fname: Fname };
+      const body = { Fname: Fname, Lname: Lname, DOB: DOB, pnumber: pnumber, gender: gender, email:email };
+
       const response = await fetch('http://localhost:3000/Customer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -76,5 +97,9 @@ async function insertCustomer() {
     } catch (err) {
       console.error('Error inserting customer:', err.message);
     }
+  }
+
+  async function buttonClicked(buttonId) { 
+    window.location.href = `reservationPage.html?seatNumber=${buttonId}`;
   }
   

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Insert Credit Card Details</h2>
+    <form id="credit-card-form">
+        <label for="cardholderName">Cardholder Name:</label>
+        <input type="text" id="cardholderName" name="cardholderName" placeholder="Enter Cardholder Name" required>
+
+        <label for="cardNumber">Card Number:</label>
+        <input type="text" id="cardNumber" name="cardNumber" placeholder="Enter Card Number" maxlength="16" required>
+
+        <label for="expiryDate">Expiration Date:</label>
+        <input type="month" id="expiryDate" name="expiryDate" required>
+
+        <label for="cvv">CVV:</label>
+        <input type="text" id="cvv" name="cvv" placeholder="Enter CVV" maxlength="3" required>
+
+        <button type="button" onclick="saveCreditCard()">Save Credit Card</button>
+    </form>
+</body>
+</html>

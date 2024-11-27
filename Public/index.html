@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Customer</title>
 </head>
 <body>
     <form id="customer-form">
         <label for="fname">first name:</label>
         <input type="text" id="Fname" placeholder="ThisIsAName">
-         <button class="btn btn-primary" type="button" onclick="insertCustomer()">
-        Save Info
-      </button>
+        
       <br><br>
 
         <label for="Lname">Last name:</label>
@@ -27,22 +25,19 @@
         <br><br>
         <label for="email">YourEmail:</label>
         <input type="text" id="email"> 
-        
-       
+        <br><br>
+        <button class="btn btn-primary" type="button" onclick="insertCustomer()">
+          Save Info
+        </button>
      </form>
 
-     <h3>Customer List</h3>
-     <table id="todo-table">
-         <thead>
-             <tr>
-                 <th>First Name</th>
-             </tr>
-         </thead>
-         <tbody>
-             <!-- Customer data will be dynamically added here -->
-         </tbody>
-     </table>
-
+  
+     <div id="todo-table">
+      <h3>Generated Buttons</h3>
+      <div id="seat-container">
+          <!-- Buttons will be dynamically added here -->
+      </div>
+  </div>
     
     
 </body>
