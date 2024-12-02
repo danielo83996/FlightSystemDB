@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer</title>
+</head>
+<body>
+    <form id="customer-form">
+        <label for="fname">first name:</label>
+        <input type="text" id="Fname" placeholder="ThisIsAName">
+        
+      <br><br>
+
+        <label for="Lname">Last name:</label>
+        <input type="text" id="Lname" placeholder="YourLastName">
+        <br><br>
+        <label for="dob">BirthYear:</label>
+        <input type="date" id="dob">
+        <br><br><label for="pnumber">YourPhoneNumber:</label>
+        <input type="text" id="pnumber">
+        <br><br>
+        <label for="gender">YourGender:</label>
+        <input type="text" id="gender">
+        <br><br>
+        <label for="email">YourEmail:</label>
+        <input type="text" id="email"> 
+        <br><br>
+        <button class="btn btn-primary" type="button" onclick="insertCustomer()">
+          Save Info
+        </button>
+     </form>
+
+  
+     <div id="todo-table">
+      <h3>Generated Buttons</h3>
+      <div id="seat-container">
+          <!-- Buttons will be dynamically added here -->
+      </div>
+  </div>
+    
+    
+</body>
+
+<script src="main.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"
+></script>
+
+</html>
