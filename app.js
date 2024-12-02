@@ -20,7 +20,6 @@ app.use(express.json());
 const dao = new AppDAO();
 const customerRepository = new Repository(dao);
 customerRepository.createCustomerTable();
-//customerRepository.createPaymentTable();
 //customerRepository.createReserveTable(); 
 //customerRepository.createCreditCardTable();
 
@@ -81,41 +80,62 @@ app.post(`/customers`, async (req, res) => {
 
 // Insert a new credit card
 app.post(`/credit-card`, async (req, res) => {
-    try {
-      const { card_number, secure_number, expiere_date, card_holder, card_type, custID } = req.body;
-      if (!card_number || !secure_number || !expiere_date || !card_holder || !card_type || !custID) {
-        return res.status(400).json({ error: 'All fields are required.' });
-      }
-  
-      // Fetch accountID based on custID
-      const accountDetails = await customerRepository.getAccount(custID);
-      if (!accountDetails || !accountDetails.accountID) {
-        return res.status(404).json({ error: 'Bank account not found for customer.' });
-      }
-  
-      const accountID = accountDetails.accountID;
-      console.log('this is the accountID that is parsed through',accountID);
-  
-      // Insert the new credit card
-      const newCreditCard = await customerRepository.insertCreditCard(
+  try {
+    const { card_number, secure_number, expire_date, card_holder, card_type, custID } = req.body;
+    if (!card_number || !secure_number || !expire_date || !card_holder || !card_type || !custID) {
+      console.log('Received data:', {
         card_number,
         secure_number,
         expiere_date,
         card_holder,
         card_type,
-        accountID,
         custID
-      );
-  
-      console.log('Inserted card:', newCreditCard);
-      res.status(201).json({ success: true, card: newCreditCard });
-    } catch (err) {
-      console.error('Error inserting credit card:', err.message);
-      res.status(500).json({ error: 'Server error while inserting credit card.' });
+      });
+      return res.status(400).json({ error: 'All fields are required.' });
     }
-  });
-  
 
+    // Adjust the expiration date format to YYYY-MM-01 if only YYYY-MM is provided
+    let validExpireDate = expire_date;
+    if (validExpireDate && validExpireDate.length === 7) {
+      validExpireDate += '-01';  // Ensure the date format is complete (YYYY-MM-01)
+    }
+
+    // Fetch accountID based on custID
+    const accountDetails = await customerRepository.getAccount(custID);
+    console.log('Query results:', accountDetails);
+
+    const accountID = accountDetails[0]?.accountID; // Access the first element's accountID
+    if (!accountID) {
+      return res.status(404).json({ error: 'Account not found for the customer.' });
+    }
+
+    // Insert the new credit card into the database
+    const newCreditCard = await customerRepository.insertCreditCard(
+      card_number,
+      secure_number,
+      validExpireDate,  // Use the corrected expire date
+      card_holder,
+      card_type,
+      accountID,
+      custID
+    );
+
+    res.status(201).json({ success: true, card: newCreditCard });
+    customerRepository.createPaymentTable();
+  } catch (err) {
+    console.error('Error inserting credit card:', err.message);
+    console.log('Received data:', {
+      card_number,
+      secure_number,
+      validExpireDate,
+      card_holder,
+      card_type,
+      custID
+    });
+    
+    res.status(500).json({ error: 'Server error while inserting credit card.' });
+  }
+});
 
 // Get flight capacity by flightID and departmentID using POST
 app.post('/flight-capacity', async (req, res) => {

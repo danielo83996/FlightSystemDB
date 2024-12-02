@@ -21,8 +21,8 @@ class Repository {
     const sql = queries.createCreditCardTable;
     return this.dao.run(sql);
   } 
-  insertCreditCard(card_number, secure_number,expiere_date,card_holder,card_type,accountID, custID){
-    return this.dao.run(queries.insertCreditCard, [card_number, secure_number,expiere_date,card_holder,card_type,accountID, custID])
+  insertCreditCard(card_number, secure_number,expire_date,card_holder,card_type,accountID, custID){
+    return this.dao.run(queries.insertCreditCard, [card_number, secure_number,expire_date,card_holder,card_type,accountID, custID])
   }
   insertBankAccount(accountID, custID, bank_name, balance) {
     console.log(`Inserting the bankinfo`);
