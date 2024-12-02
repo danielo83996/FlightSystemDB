@@ -22,7 +22,7 @@ const customerRepository = new Repository(dao);
 customerRepository.createCustomerTable();
 //customerRepository.createPaymentTable();
 //customerRepository.createReserveTable(); 
-customerRepository.createCreditCardTable();
+//customerRepository.createCreditCardTable();
 
 // Routes
 
