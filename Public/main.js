@@ -70,11 +70,38 @@ async function insertCustomer() {
       console.log(`Capacity value: ${capacity}`);
 
       // Create seat buttons dynamically based on capacity
-      const buttonsDiv = document.getElementById('seat-container');
-      buttonsDiv.innerHTML = ''; // Clear any previous buttons
-      for (let i = 1; i <= capacity; i++) {
-        buttonsDiv.innerHTML += `<button class="seat-btn" id="seat-btn-${i}" type="button" onclick="buttonClicked(${i})">Seat ${i}</button>`;
+      try {
+        // Get the container element
+        const buttonsDiv = document.getElementById('seat-container');
+        if (!buttonsDiv) {
+          console.error('Seat container element not found!');
+          return; // Stop execution if the container is missing
+        }
+      
+        console.log('Seat container element:', buttonsDiv);
+      
+        // Clear existing buttons (if any)
+        buttonsDiv.innerHTML = '';
+      
+        // Loop to create buttons dynamically
+        for (let i = 1; i <= capacity; i++) {
+          const buttonHTML = `
+            <button 
+              class="seat-btn" 
+              id="seat-btn-${i}" 
+              type="button" 
+              onclick="buttonClicked(${i}, '${flightID}', '${departmentID}')">
+              Seat ${i}
+            </button>`;
+          buttonsDiv.innerHTML += buttonHTML; // Append button to container
+          console.log(`Button ${i} added.`); // Log each button creation
+        }
+      
+        console.log('All buttons generated successfully.');
+      } catch (err) {
+        console.error('Error generating seat buttons:', err.message);
       }
+      
     } else {
       alert('Could not fetch flight capacity.');
     }
@@ -84,7 +111,7 @@ async function insertCustomer() {
 }
 
 // Function to handle button click 
-async function buttonClicked(buttonId) {
+async function buttonClicked(buttonId, flightID, departmentID) {
   try {
     // Fetch customer data
     const customerData = await getCustomerById(80); // Replace 80 with the actual customerId
@@ -146,7 +173,7 @@ async function buttonClicked(buttonId) {
 
     const data = await response.json();
     console.log('Bank account inserted successfully:', data);
-    window.location.href = `reservationPage.html?seatNumber=${buttonId}`;
+    window.location.href = `reservationPage.html?seatNumber=${buttonId}&flightID=${flightID}&departmentID=${departmentID}`;
   } catch (err) {
     console.error('Error in buttonClicked:', err.message);
   }
@@ -177,10 +204,10 @@ async function saveCreditCard() {
   const card_holder = document.querySelector('#cardholderName').value.trim();
   const card_number = document.querySelector('#cardNumber').value.trim();
   const secure_number = document.querySelector('#cvv').value.trim();
-  const expiere_date = document.querySelector('#expiryDate').value.trim();
+  const expire_date = document.querySelector('#expiryDate').value.trim();
   const card_type = 'classic';  // Static card type
   
-  if (!card_holder || !card_number || !secure_number || !expiere_date || !card_type) {
+  if (!card_holder || !card_number || !secure_number || !expire_date || !card_type) {
     alert('All fields must be filled out.');
     return;
   }
@@ -190,7 +217,7 @@ async function saveCreditCard() {
   response = await fetch('http://localhost:3000/credit-card', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ card_number, secure_number, expiere_date, card_holder, card_type, custID }),
+    body: JSON.stringify({ card_number, secure_number, expire_date, card_holder, card_type, custID }),
   });
 
   const result = await response.json();

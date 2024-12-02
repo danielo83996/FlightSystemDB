@@ -9,8 +9,8 @@ const queries = {
 	email	 VARCHAR(50)) `,
     createPaymentTable: `CREATE TABLE IF NOT EXISTS payment(
 	transactionID INT PRIMARY KEY NOT NULL,
-	accountID INT
-	FOREIGN KEY(accountID) REFERENCES BANK ACCOUNT(accountID),
+	accountID INT,
+	FOREIGN KEY(accountID) REFERENCES BANKACCOUNT(accountID),
 	price DECIMAL(50,2) NOT NULL
 	);
 `,
@@ -40,7 +40,7 @@ const queries = {
     PRIMARY KEY(accountID, custID, card_number)
 );`, 
     insertCustomer: `INSERT INTO customer (Lname, Fname, DOB, pnumber, gender, email) VALUES (?, ?, ?, ?, ?, ?)`,
-    insertCreditCard: `INSERT INTO credit_info(card_number, secure_number,expiere_date,card_holder,card_type,accountID, custID) VALUES(?, ?, ?, ?, ?, ?, ?)`,
+    insertCreditCard: `INSERT INTO credit_info(card_number, secure_number,expire_date,card_holder,card_type,accountID, custID) VALUES(?, ?, ?, ?, ?, ?, ?)`,
     insertBankAccount: `INSERT INTO bankaccount (accountID, custID, bank_name, balance) VALUES (?, ?, ?, ?)`,
     getCustomerById: `SELECT custID FROM customer ORDER BY custID DESC LIMIT 1`, 
     getAccount: `SELECT accountID FROM bankaccount WHERE custID = ?`,
