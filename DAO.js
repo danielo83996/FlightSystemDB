@@ -1,5 +1,5 @@
-const mysql = require('mysql2');
-const Promise = require('bluebird');
+import mysql from 'mysql2';
+import Promise from 'bluebird';
 
 class AppDAO {
   constructor() {
@@ -7,7 +7,7 @@ class AppDAO {
     this.connection = mysql.createConnection({
       host: '127.0.0.1', // Your database host
       user: 'root', // Your MySQL username
-      password: 'Do34117x!', // Your MySQL password
+      password: '', // Your MySQL password
       port: '3306', // Your MySQL port, normally "3306"
       database: 'test', // DO NOT EDIT (You need to create a "test" database from your "MySQL Workbench")
     });
@@ -48,4 +48,4 @@ class AppDAO {
   }
 }
 
-module.exports = AppDAO;
+export default AppDAO;

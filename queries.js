@@ -25,9 +25,28 @@ const queries = {
     FOREIGN KEY (flightID) REFERENCES FLIGHT(flightID),
     FOREIGN KEY (transactionID) REFERENCES PAYMENT(transactionID),
 );`,
+    createCreditCardTable: `CREATE TABLE IF NOT EXISTS credit_info(
+    card_number int NOT NULL,
+    secure_number int NOT NULL,
+     expire_date date,
+     card_holder varchar(100) NOT NULL,
+    card_type varchar(25),
+     accountID INT NOT NULL,
+     custID int NOT NULL,
+    FOREIGN KEY(accountID) REFERENCES
+	BANKACCOUNT(accountID),
+    FOREIGN KEY(custID) REFERENCES
+	customer(custID),
+    PRIMARY KEY(accountID, custID, card_number)
+);`, 
     insertCustomer: `INSERT INTO customer (Lname, Fname, DOB, pnumber, gender, email) VALUES (?, ?, ?, ?, ?, ?)`,
-    getCustomerById: `SELECT * FROM customer WHERE custID = ?`,
-    selectCustomer: `SELECT * FROM customer`,
+    insertCreditCard: `INSERT INTO credit_info(card_number, secure_number,expiere_date,card_holder,card_type,accountID, custID) VALUES(?, ?, ?, ?, ?, ?, ?)`,
+    insertBankAccount: `INSERT INTO bankaccount (accountID, custID, bank_name, balance) VALUES (?, ?, ?, ?)`,
+    getCustomerById: `SELECT custID FROM customer ORDER BY custID DESC LIMIT 1`, 
+    getAccount: `SELECT accountID FROM bankaccount WHERE custID = ?`,
+    updateSeatCount: 'UPDATE fly SET capacity = capacity - 1 WHERE departmentID = ? AND flightID = ?',
+    getCapacity: `SELECT capacity FROM fly WHERE departmentID = ? AND flightID = ?`
+
   };
   
-  module.exports = queries;
+  export default queries;

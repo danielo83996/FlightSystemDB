@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Flights</title>
+    <link rel="stylesheet" href="flightstyle.css"> <!-- Link to external CSS file -->
+</head>
+<body>
+    <h1>WELCOME TO SLAY BOOKING FLIGHT</h1>
+    <h2>Travel the World Without Breaking the Bank?</h2>
+    <h2>NO PROBLEM!</h2>
+
+    <table border="1">
+        <thead>
+            <tr align="center" class="table-header">
+                <th>Flight ID</th>
+                <th>Department ID</th>
+                <th>Depart City</th>
+                <th>Depart State</th>
+                <th>Arrive City</th>
+                <th>Arrive State</th>
+                <th>Time Depart</th>
+                <th>Time Arrive</th>
+                <th>Flight Price</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="flights-table-body">
+            <!-- Table rows will be dynamically generated here -->
+        </tbody>
+    </table>
+
+    <script>
+        async function fetchFlights() {
+            try {
+                const response = await fetch('/flights')
+                const flights = await response.json()
+                const flightsTableBody = document.getElementById('flights-table-body')
+                flights.forEach(flight => {
+                    const row = document.createElement('tr')
+                    row.innerHTML = `
+                        <td>${flight.flightID}</td>
+                        <td>${flight.departmentID}</td>
+                        <td>${flight.depart_city}</td>
+                        <td>${flight.depart_state}</td>
+                        <td>${flight.arrive_city}</td>
+                        <td>${flight.arrive_state}</td>
+                        <td>${new Date(flight.depart_date).toLocaleString()}</td>
+                        <td>${new Date(flight.arrive_time).toLocaleString()}</td>
+                        <td>$${flight.flight_price}</td>
+                        <td><a href="index.html?flightID=${flight.flightID}&departmentID=${flight.departmentID}"><button>Buy</button></a></td>
+                        
+                    `
+                    flightsTableBody.appendChild(row)
+                })
+            } catch (error) {
+                console.error('Error fetching flights:', error)
+            }
+        }
+
+        fetchFlights()
+    </script>
+</body>
+</html>
