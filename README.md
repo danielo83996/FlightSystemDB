@@ -18,7 +18,7 @@
 the project is meant to simulate what a client would see when trying to book a flight online by first choosing a plane they will ride on then inserting their name, so they then choose a seat, and lastly they would insert ther credit card information that reserves their seat. they purpose of the simulation is to understand how clients interact with the database.
 
 ## Demo
-Include a link to a demo video, deployment, or presentation. Optionally embed a GIF or image of the project in action.
+Link to video
 
 ## Screenshots
 this is the landing page when localhost:3000 is run and fetches flights from the DB
@@ -132,37 +132,91 @@ Explain how to set up and run the project locally. For example:
 
 
 ## Code Snippets
-Include a small, key snippet of code to highlight an interesting or critical part of your project. For example:
-````SQL
-# Example: Training a machine learning model
-model.fit(train_data, train_labels, epochs=10, validation_split=0.2)
+this function call in flight.html is significant because it fetches data from `flights` table and the only way for the client and the server to communicate with each other before the client puts in their information
+````HTML
+<script>
+        async function fetchFlights() {
+            try {
+                const response = await fetch('/flights')
+                const flights = await response.json()
+                const flightsTableBody = document.getElementById('flights-table-body')
+                flights.forEach(flight => {
+                    const row = document.createElement('tr')
+                    row.innerHTML = `
+                        <td>${flight.flightID}</td>
+                        <td>${flight.departmentID}</td>
+                        <td>${flight.depart_city}</td>
+                        <td>${flight.depart_state}</td>
+                        <td>${flight.arrive_city}</td>
+                        <td>${flight.arrive_state}</td>
+                        <td>${new Date(flight.depart_date).toLocaleString()}</td>
+                        <td>${new Date(flight.arrive_time).toLocaleString()}</td>
+                        <td>$${flight.flight_price}</td>
+                        <td><a href="index.html?flightID=${flight.flightID}&departmentID=${flight.departmentID}"><button>Buy</button></a></td>
+                        
+                    `
+                    flightsTableBody.appendChild(row)
+                })
+            } catch (error) {
+                console.error('Error fetching flights:', error)
+            }
+        }
+
+        fetchFlights()
+    </script>
 
 ````
+this code snippit is when we first insert an item into the database and allows us to create a customer whos ID will be frequently used
+````javascript
+  const inputBox = document.querySelector('#Fname');
+  const Fname = inputBox.value.trim();
+  const Lname = document.querySelector('#Lname').value.trim();
+  const DOB = document.querySelector('#dob').value.trim();
+  const pnumber = document.querySelector('#pnumber').value.trim();
+  const gender = document.querySelector('#gender').value.trim();
+  const email = document.querySelector('#email').value.trim();
+
+  // Validate form inputs
+  if (!Fname || !Lname || !DOB || !pnumber || !gender || !email) {
+    alert('All fields must be filled out.');
+    return;
+  }
+
+  try {
+    const body = { Fname, Lname, DOB, pnumber, gender, email };
+
+    const response = await fetch('http://localhost:3000/customers', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+````
+
 
 ## Features
-Highlight the features your project currently supports:
-* User authentication
-* Real-time predictions
-* Mobile responsiveness
+features FlightSystemDB supports:
+* Database Integration
+* User-Friendly Navigation
+* Customer Management
 
 ### Future Enhancements
-List potential features to add in the future:
+potential features to add in the future:
 * allow for customerIDs to be reuesed
 * display the reservation the customer has made
 * Deploy the project on a cloud server for it to be better simulated
 
 ## Status
-Clearly state the current status of your project:
+status of the FlightSystemDB:
 * _Completed_: No further updates planned, but open to feedback and collaboration.
 
 ## Challenges
 Document any challenges faced during the project:
-* Handling large datasets with limited compute power.
-* Training the model on imbalanced datasets.
-* Integration of multiple APIs for seamless functioning.
+* extracting values from tables
+* displaying items that are with a table whether it was rows or a single vale
+* Integration of databse with `SELECTION`, `INSERTION`, and `UPDATE`
 
 ## Learnings
-* Enhanced understanding of model optimization techniques.
+* how to `SELECT` and `INSERT` into a database through a webapplication.
 * Improved skills in debugging deployment issues.
 * Learned to manage collaborative projects efficiently.
 
