@@ -210,7 +210,7 @@ status of the FlightSystemDB:
 * _Completed_: No further updates planned, but open to feedback and collaboration.
 
 ## Challenges
-Document any challenges faced during the project:
+Challenges faced during the project:
 * extracting values from tables
 * displaying items that are with a table whether it was rows or a single vale
 * Integration of databse with `SELECTION`, `INSERTION`, and `UPDATE`
@@ -221,7 +221,7 @@ Document any challenges faced during the project:
 * Learned to manage collaborative projects efficiently.
 
 ## Contributors
-List all contributors involved in the project:
+List of all contributors involved in the project:
 * [Daniel](https://github.com/danielo83996) - Backend Dev
     * vhandeled the insertion and modification of tables in the DB  
 * [Van](https://github.com/vana1219) - fullstack Dev
