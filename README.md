@@ -15,7 +15,7 @@
 * [Contributors](#contributors)
 
 ## Overview
-Provide a summary of the project, its purpose, and the problem it solves. Mention if it was built during a hackathon or for a specific challenge.
+the project is meant to simulate what a client would see when trying to book a flight online by first choosing a plane they will ride on then inserting their name, so they then choose a seat, and lastly they would insert ther credit card information that reserves their seat. they purpose of the simulation is to understand how clients interact with the database.
 
 ## Demo
 Include a link to a demo video, deployment, or presentation. Optionally embed a GIF or image of the project in action.
@@ -116,7 +116,6 @@ List potential features to add in the future:
 
 ## Status
 Clearly state the current status of your project:
-* _In Progress_: Actively working on new features and improvements.
 * _Completed_: No further updates planned, but open to feedback and collaboration.
 
 ## Challenges
