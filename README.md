@@ -25,24 +25,24 @@ Include a link to a demo video, deployment, or presentation. Optionally embed a 
 Add 1-3 images showcasing the main features of your project. Describe the screenshots briefly.
 
 ## Technologies Used
-List the main languages, libraries, frameworks, and tools used in the project. For example:
-* Python
-* TensorFlow
-* React
-* MongoDB
+* SQL
+* JavaScript
+* HTML
+* CSS
 
 ## Setup Instructions
 Explain how to set up and run the project locally. For example:
 1. Clone the repository: `git clone [repo-url]`
-2. Install dependencies: `pip install -r requirements.txt`
-3. Run the application: `python app.py`
+2. 
+3. Install dependencies: `pip install -r requirements.txt`
+4. Run the application: `node app.js`
 
 ## How It Works
 Describe the core workflow or logic of the project in a few points. You can break it into steps or modules for clarity.
 
 ## Code Snippets
 Include a small, key snippet of code to highlight an interesting or critical part of your project. For example:
-````python
+````SQL
 # Example: Training a machine learning model
 model.fit(train_data, train_labels, epochs=10, validation_split=0.2)
 
