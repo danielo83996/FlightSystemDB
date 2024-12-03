@@ -99,7 +99,7 @@ Explain how to set up and run the project locally. For example:
     });
 
    ````
-5. Run the application: `node app.js`
+5. install `node.js`, and Run the application in the terminal: `node app.js`
 
 ## How It Works
 1. Database Connection
