@@ -24,8 +24,6 @@ customerRepository.createCreditCardTable();
 customerRepository.createPaymentTable(); 
 customerRepository.createReserveTable();
 
-// Routes
-
 // Get all flights
 app.get('/flights', async (req, res) => {
     console.log('Received request for /flights');
