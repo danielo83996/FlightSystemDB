@@ -21,7 +21,17 @@ the project is meant to simulate what a client would see when trying to book a f
 Include a link to a demo video, deployment, or presentation. Optionally embed a GIF or image of the project in action.
 
 ## Screenshots
-Add 1-3 images showcasing the main features of your project. Describe the screenshots briefly.
+this is the landing page when localhost:3000 is run and fetches flights from the DB
+<img width="1440" alt="Screenshot 2024-12-03 at 12 36 56 PM" src="https://github.com/user-attachments/assets/a1d77fdf-fb55-4dc7-8bfb-fc8dc0598e39">
+
+this is the page where users insert info in a field that will be inserted into the Customer Table, and if they put correct info it should show the customer the seats they can pick for the flight they selected in the previous page
+
+Before clicking 'Save Info':
+<img width="1440" alt="Screenshot 2024-12-03 at 12 37 39 PM" src="https://github.com/user-attachments/assets/60a12a6d-05e3-40f2-8635-6e7f08c9fa51">
+
+After clicking 'Save Info':
+<img width="1440" alt="Screenshot 2024-12-03 at 12 37 47 PM" src="https://github.com/user-attachments/assets/b766591e-544a-4c20-a177-faff70da53fa">
+
 
 ## Technologies Used
 * SQL
@@ -92,7 +102,34 @@ Explain how to set up and run the project locally. For example:
 5. Run the application: `node app.js`
 
 ## How It Works
-Describe the core workflow or logic of the project in a few points. You can break it into steps or modules for clarity.
+1. Database Connection
+   * The program connects to the user's database on `port 3000`.
+   * If the connection fails, the program will not run.
+2. Fetching and Displaying Flights
+   * Once a connection is established, the program fetches data from the `flights` table in the database using query functions.
+   * It loops through each row in the `flights` table using the `flightID` and displays the available flights as a table on the client-side HTML page.
+   * Alongside each flight, a Buy button is displayed.
+   * When the Buy button is clicked, the user is redirected to a separate HTML page (via a URL containing the `flightID` and other primary keys). This page prompts the user to enter their customer information.
+3. Customer Information Submission
+   * On the customer information page, the user fills out a form.
+   * The submitted data is sent to the backend, where it is processed and inserted into the database using the `insertCustomer` query.
+   * After the information is saved, a GET request is made to fetch the seat capacity of the selected flight using the 
+   * `flightID` and `departmentID` from the URL.
+   * The capacity is retrieved from the `FLY` database and used to dynamically generate seat selection buttons for the user.
+4. Bank Account Generation
+   * Once the customer is added, the program automatically generates a bank account for them in the database.
+   * This account includes a randomly assigned `accountID`, a bank name, and a balance.
+5. Seat Selection and Payment
+   * When the user selects a seat, they are redirected to a reservation page.
+   * The reservation page URL includes the `accountID`, `flightID`, and `departmentID`.
+   * The page displays a form for the user to input their credit card information.
+   * Once submitted, the credit card information is saved to the database using a POST request and a query function.
+6. Payment Processing
+   * A function is triggered to deduct the flight cost from the user’s bank account.
+   * This function uses the `accountID`, `flightID`, and `departmentID` to update the user's balance in the database.
+7. Reservation Creation
+   * Finally, a POST request is made to insert the `reservation` into the reservations table in the database, completing the booking process.
+
 
 ## Code Snippets
 Include a small, key snippet of code to highlight an interesting or critical part of your project. For example:
@@ -110,9 +147,9 @@ Highlight the features your project currently supports:
 
 ### Future Enhancements
 List potential features to add in the future:
-* Add more datasets
-* Improve accuracy
-* Deploy the project on a cloud service
+* allow for customerIDs to be reuesed
+* display the reservation the customer has made
+* Deploy the project on a cloud server for it to be better simulated
 
 ## Status
 Clearly state the current status of your project:
