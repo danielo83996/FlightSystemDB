@@ -20,10 +20,9 @@ app.use(express.json());
 const dao = new AppDAO();
 const customerRepository = new Repository(dao);
 customerRepository.createCustomerTable();
-//customerRepository.createReserveTable(); 
-//customerRepository.createCreditCardTable();
-
-// Routes
+customerRepository.createCreditCardTable();
+customerRepository.createPaymentTable(); 
+customerRepository.createReserveTable();
 
 // Get all flights
 app.get('/flights', async (req, res) => {
@@ -119,7 +118,6 @@ app.post(`/credit-card`, async (req, res) => {
       accountID,
       custID
     );
-
     res.status(201).json({ success: true, card: newCreditCard });
     customerRepository.createPaymentTable();
   } catch (err) {
@@ -206,6 +204,55 @@ app.post('/bank-account', async (req, res) => {
     }
 });
 
+app.post('/balanceUpdate', async(req, res) => {
+  try {
+  const {accountID, custID, flightID, departmentID} = req.body;
+  console.log(`this is the account ID:${accountID}\n
+    this is the custID: ${custID}\n
+    this is the flightID: ${flightID}\n
+    this is the departmentID: ${departmentID}`);
+  if (!accountID || !custID || !flightID || !departmentID) {
+    return res.status(400).json({ error: 'All fields are required.' });
+}
+
+const balanceObj = await customerRepository.getBalance(accountID, custID);
+const balance = balanceObj[0]?.balance;
+
+console.log(`balance of bank account before function: ${balance}`);
+const seatPrice = await customerRepository.getSeatPrice(flightID, departmentID);
+const price = seatPrice[0]?.flight_price;
+
+const result = await customerRepository.updateBankAccount(price, accountID, custID);
+console.log('balance of bank account before function:', balance);
+
+console.log('here is the custID in the jafjpoaijfd: ', custID);
+const paymentMade = await customerRepository.insertPayment(accountID, custID, price);
+
+res.status(201).json({ success: true, message: 'Payment successfully', paymentMade });
+
+
+}catch (err) {
+  console.error('Error updating bank account:', err.message);
+  res.status(500).json({ error: 'Server error while updating bank account.' });
+}});
+
+app.post('/reservationUpdate', async(req, res) => {
+  const {accountID, custID, flightID, seat_number} = req.body;
+  try {
+    const fetchTransactionID = await customerRepository.getTransactionId(accountID, custID);
+    const transactionID = fetchTransactionID[0]?.transactionID;
+    console.log(`this is the account ID:${accountID}\n
+    this is the custID: ${custID}\n
+    this is the flightID: ${flightID}\n
+    this is the seat_number: ${seat_number}\n`);
+    const reservation = await customerRepository.insertReservation(custID,seat_number,flightID,transactionID);
+
+  }catch (err) {
+    console.error('Error inserting reservation:', err.message);
+    res.status(500).json({ error: 'Server error while inserting reservation.' });
+  }
+
+});
 
 // Serve flight.html for the root route
 app.get('/', (req, res) => {

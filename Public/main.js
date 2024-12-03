@@ -1,9 +1,9 @@
+
 // Set global variables
 let customers = [];
 const params = new URLSearchParams(window.location.search);
 const flightID = params.get('flightID');
-const departmentID = params.get('departmentID'); 
-let account=0;
+const departmentID = params.get('departmentID');  
 console.log(flightID, departmentID);
 
 // Function to set customers
@@ -159,7 +159,7 @@ async function buttonClicked(buttonId, flightID, departmentID) {
     }
 
     // Create a bank account with the fetched custID
-    account = accountID;
+    let account = accountID;
     const body = { accountID, custID, bank_name, balance };
     const response = await fetch('http://localhost:3000/bank-account', {
       method: 'POST',
@@ -173,7 +173,8 @@ async function buttonClicked(buttonId, flightID, departmentID) {
 
     const data = await response.json();
     console.log('Bank account inserted successfully:', data);
-    window.location.href = `reservationPage.html?seatNumber=${buttonId}&flightID=${flightID}&departmentID=${departmentID}`;
+    console.log(`here is the accountID: ${account}`);
+    window.location.href = `reservationPage.html?seatNumber=${buttonId}&flightID=${flightID}&departmentID=${departmentID}&accountID=${account}`;
   } catch (err) {
     console.error('Error in buttonClicked:', err.message);
   }
@@ -182,7 +183,7 @@ async function buttonClicked(buttonId, flightID, departmentID) {
 
 
 async function saveCreditCard() {
-  const customerData = await getCustomerById(80); // Replace 80 with the actual customerId
+  const customerData = await getCustomerById(80); 
 
   console.log('Full customer data:', customerData);
 
@@ -221,8 +222,9 @@ async function saveCreditCard() {
   });
 
   const result = await response.json();
-  console.log('Credit card saved successfully:', result);
+  console.log('Credit card saved successfully:', result); 
   document.getElementById('credit-card-form').reset();
+  updateCustomerData(custID);
 }
 
 
@@ -267,6 +269,26 @@ async function getBankAccount(custID) {
   }
 }
 
+async function updateCustomerData(custID){
+  let seat_number = params.get('seatNumber');
+  console.log(`this is the seat NUmber: ${seat_number}`);
+  let accountID = params.get('accountID');
+  console.log = (`This is the accountID in the URL: ${accountID}`)
+
+  const balance = await fetch('http://localhost:3000/balanceUpdate', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ accountID, custID, flightID, departmentID }), // Send data in the request body
+    
+  });
+
+  const reservation = await fetch('http://localhost:3000/reservationUpdate',{
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ accountID, custID, flightID, seat_number}),
+  });
+
+  alert('Payment Made!');
 
 
-
+}

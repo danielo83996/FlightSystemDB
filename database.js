@@ -30,5 +30,7 @@ export async function getFlight(id) {
     }
 }
 
+ 
+
 const result = await getFlights()
 console.log(result)
