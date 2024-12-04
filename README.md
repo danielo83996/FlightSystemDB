@@ -38,6 +38,7 @@ After clicking 'Save Info':
 * JavaScript
 * HTML
 * CSS
+* Node
 
 ## Setup Instructions
 Explain how to set up and run the project locally. For example:
