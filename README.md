@@ -1,6 +1,6 @@
 # FlightSystemDB(SLAY BOOKING FLIGHT)
 
-> Travel the World Without Breaking the Bank?(simulation).
+> Link to README: https://github.com/danielo83996/FlightSystemDB
 
 ## Table of Contents
 * [Overview](#overview)
