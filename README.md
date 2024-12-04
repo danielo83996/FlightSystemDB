@@ -18,7 +18,7 @@
 the project is meant to simulate what a client would see when trying to book a flight online by first choosing a plane they will ride on then inserting their name, so they then choose a seat, and lastly they would insert ther credit card information that reserves their seat. they purpose of the simulation is to understand how clients interact with the database.
 
 ## Demo
-Link to video
+[Link to video](https://youtu.be/zTJ5sitBimw?si=-7-c7nJ6M3QvSayK)
 
 ## Screenshots
 this is the landing page when localhost:3000 is run and fetches flights from the DB
